@@ -3,54 +3,18 @@
     <nav-bar class="home-nav">
       <div slot="center">优益小C</div>
     </nav-bar>
-    <home-swiper :banners="banners"></home-swiper>
-    <home-recommend :recommends="recommend"></home-recommend>
-    <feature-view></feature-view>
-    <tab-control :titles="titles" class="tab-control" @tabClick="tabClick"></tab-control>
-    <goods-list :goods="showGoods"></goods-list>
-
-    <ul>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-      <li>列表*10</li>
-    </ul>
+    <scroll class="content" ref="scroll">
+      <home-swiper :banners="banners"></home-swiper>
+      <home-recommend :recommends="recommend"></home-recommend>
+      <feature-view></feature-view>
+      <tab-control
+        :titles="titles"
+        class="tab-control"
+        @tabClick="tabClick"
+      ></tab-control>
+      <goods-list :goods="showGoods"></goods-list>
+    </scroll>
+    <back-top  @click.native="backClick"></back-top>
   </div>
 </template>
 
@@ -63,9 +27,10 @@ import FeatureView from './components/FeatureView'
 import NavBar from 'components/common/navbar/NavBar'
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
+import Scroll from 'components/common/scroll/Scroll'
+import BackTop from 'components/content/backTop/BackTop'
 // 导入方法
 import { getHomeMultidata, getHomeGoodsList } from 'network/home'
-
 export default {
   name: 'Home',
   data() {
@@ -78,15 +43,15 @@ export default {
       goods: {
         pop: { page: 0, list: [] },
         new: { page: 0, list: [] },
-        sell: { page: 0, list: [] }
+        sell: { page: 0, list: [] },
       },
-      currentType: 'pop'
+      currentType: 'pop',
     }
   },
   computed: {
     showGoods() {
       return this.goods[this.currentType].list
-    }
+    },
   },
   created() {
     this.GetHomeMultidata()
@@ -100,7 +65,12 @@ export default {
     HomeRecommend,
     FeatureView,
     TabControl,
-    GoodsList
+    GoodsList,
+    Scroll,
+    BackTop
+  },
+  mounted() {
+
   },
   methods: {
     // 获取首页数据
@@ -136,14 +106,19 @@ export default {
       }
       console.log(this.currentType)
       this.GetHomeGoodsList(this.currentType)
+    },
+    backClick(){
+      this.$refs.scroll.scrollTo(0,0,500);
     }
-  }
+  },
 }
 </script>
 
 <style scoped>
 #home {
   padding-top: 44px;
+  height: 100vh;
+  position: relative;
 }
 .home-nav {
   background-color: var(--color-tint);
@@ -158,4 +133,17 @@ export default {
   position: sticky;
   top: 44px;
 }
+.content{
+  position: absolute;
+  overflow: hidden;
+  top:44px;
+  bottom: 49px;
+  left: 0;
+  right: 0;
+}
+/* .content {
+  height: calc(100% - 93px);
+  overflow: hidden;
+  margin-top: 44px;
+} */
 </style>
