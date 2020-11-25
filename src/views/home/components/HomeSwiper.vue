@@ -1,9 +1,9 @@
 <template>
   <div>
-     <swiper :interval="5000">
+    <swiper :interval="5000">
       <swiper-item v-for="item in banners" :key="item.link">
         <a :href="item.link">
-          <img :src="item.image">
+          <img :src="item.image" @load="swiperImgLoad">
         </a>
       </swiper-item>
     </swiper>
@@ -14,20 +14,30 @@
 import { Swiper, SwiperItem } from 'components/common/swiper'
 export default {
   name: 'HomeSwiper',
-  props:{
-    banners:{
-      type:Array,
-      default(){
+  props: {
+    banners: {
+      type: Array,
+      default() {
         return []
       }
     }
   },
   data() {
-    return {}
+    return {
+      isLoad: false
+    }
   },
   components: {
     Swiper,
     SwiperItem
+  },
+  methods: {
+    swiperImgLoad() {
+      if (!this.isLoad) {
+        this.$emit('swiperImgLoad')
+        this.isLoad = true
+      }
+    }
   }
 }
 </script>
