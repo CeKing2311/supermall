@@ -71,7 +71,7 @@ export default {
     this.$refs.scroll.refresh()
   },
   // 记录页面离开时的位置
-  deactivated() {
+  deactivated() {    
     this.saveY = this.$refs.scroll.getScrollY()
   },
   created() {

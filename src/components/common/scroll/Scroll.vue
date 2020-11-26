@@ -43,7 +43,6 @@ export default {
         this.$emit('scroll', position)
       })
     }
-
     // 监听上拉事件
     if (this.pullUpLoad) {
       this.scroll.on('pullingUp', () => {

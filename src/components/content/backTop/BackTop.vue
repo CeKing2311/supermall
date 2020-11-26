@@ -8,7 +8,8 @@
 export default {
   name: 'BackTop',
   data() {
-    return {}
+    return {
+    }
   },
   components: {},
   methods: {

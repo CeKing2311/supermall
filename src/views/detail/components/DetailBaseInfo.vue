@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-base-info" v-if="goodsInfo">
+  <div class="detail-base-info" v-if="Object.keys(goodsInfo).length !==0">
       <div class="goods-title">{{goodsInfo.title}}</div>
       <div class="goods-price">
           <div class="price">{{goodsInfo.newPrice}}</div>
@@ -39,7 +39,8 @@ export default {
 </script>
 <style scoped>
 .detail-base-info{
-  padding: 15px 10px;
+  padding: 10px;
+  border-bottom: 5px solid #e5e5e5;
 }
 .goods-title{
   font-size: 18px;

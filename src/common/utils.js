@@ -8,3 +8,9 @@ export function debounce(func, delay) {
     }, delay)
   }
 }
+export function dateformat(_time) {
+  const date = new Date(parseInt(_time));
+  let dateStr = date.toLocaleDateString();
+  dateStr = dateStr.replace("/", "-").replace("/", "-");
+  return dateStr;
+}
