@@ -1,8 +1,8 @@
 <template>
   <div class="detail-params" v-if="Object.keys(goodsParams).length !== 0">
     <div class="params-rule">
-      <table class="table-rule">
-        <tr v-for="(item,index) in goodsParams.rule.tables[0]" :key="'rule'+index">
+      <table class="table-rule" v-for="(tab,idx0) in goodsParams.rule.tables" :key="'tab'+idx0">
+        <tr v-for="(item,index) in tab" :key="'rule'+index">
           <td v-for="(it,idx) in item" :key="'td'+idx">{{it}}</td>
         </tr>
       </table>
@@ -74,6 +74,8 @@ export default {
 .info-text{
   color: var(--color-high-text);
   text-align: left;
-  padding-left: 10px;
+  /* padding-left: 10px; */
+  position: relative;
+  left: 30px;
 }
 </style>

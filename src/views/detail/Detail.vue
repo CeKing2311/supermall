@@ -1,16 +1,16 @@
 <template>
   <div id="detail">
     <detail-nav-bar class="detail-nav" ref="detailnav" @toCurrent="toCurrent"></detail-nav-bar>
-    <scroll :probeType="3" ref="scroll" class="content" @scroll="detailScroll">
+    <scroll :probe-type="3" ref="scroll" class="content" @scroll="detailScroll">
       <detail-swiper :banners="banners"></detail-swiper>
-      <detail-base-info :goodsInfo="goodsInfo"></detail-base-info>
-      <detail-shop-info :shopInfo="shopInfo"></detail-shop-info>
-      <detail-goods-info :detailInfo="detailInfo" @imageLoad="detailImageLoad"></detail-goods-info>
-      <detail-params :goodsParams="goodsParams" ref="params"></detail-params>
-      <detail-comment-info :commentInfo="commentInfo" ref="comment"></detail-comment-info>
+      <detail-base-info :goods-info="goodsInfo"></detail-base-info>
+      <detail-shop-info :shop-info="shopInfo"></detail-shop-info>
+      <detail-goods-info :detail-info="detailInfo" @imageLoad="detailImageLoad"></detail-goods-info>
+      <detail-params :goods-params="goodsParams" ref="params"></detail-params>
+      <detail-comment-info :comment-info="commentInfo" ref="comment"></detail-comment-info>
       <goods-list :goods="goodsRecommend" ref="recommend"></goods-list>
     </scroll>
-    <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
+    <back-top @click.native="backClick" class="backTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 <script scoped>
@@ -65,6 +65,13 @@ export default {
     this.id = this.$route.params.id
     this._getGoodsDetail()
     this._getRecommend()
+    // console.log(this.id);
+  },
+  watch: {
+    // id(newVal, oldVal) {
+    //   if (newVal != oldVal) {
+    //   }
+    // }
   },
   mounted() {
     const refresh = debounce(this.$refs.scroll.refresh, 500)
@@ -121,19 +128,31 @@ export default {
     toCurrent(index) {
       switch (index) {
         case 0:
-           this.$refs.scroll.scrollTo(0, 0, 500)
-          break;
+          this.$refs.scroll.scrollTo(0, 0, 500)
+          break
         case 1:
-           this.$refs.scroll.scrollTo(0, -this.$refs.params.$el.offsetTop-1, 500)
-           break;
+          this.$refs.scroll.scrollTo(
+            0,
+            -this.$refs.params.$el.offsetTop - 1,
+            500
+          )
+          break
         case 2:
-           this.$refs.scroll.scrollTo(0, -this.$refs.comment.$el.offsetTop-1, 500)
-           break;
+          this.$refs.scroll.scrollTo(
+            0,
+            -this.$refs.comment.$el.offsetTop - 1,
+            500
+          )
+          break
         case 3:
-           this.$refs.scroll.scrollTo(0, -this.$refs.recommend.$el.offsetTop-1, 500)
-           break;
+          this.$refs.scroll.scrollTo(
+            0,
+            -this.$refs.recommend.$el.offsetTop - 1,
+            500
+          )
+          break
         default:
-          break;
+          break
       }
     }
   }
@@ -152,6 +171,12 @@ export default {
   z-index: 9;
   background: #fff;
 }
+/* .backTop{
+  position: relative;
+  z-index: 8;
+  opacity: 1;
+  bottom: 5%;
+} */
 .content {
   height: calc(100% - 44px);
   /* overflow: hidden; */

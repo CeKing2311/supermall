@@ -7,7 +7,7 @@
     <div class="shop-content">
       <div class="content-item info">
         <div class="shop-sells info-item">
-          <div>{{shopInfo.sells}}</div>
+          <div>{{shopInfo.sells | sellCounter}}</div>
           <div>总销量</div>
         </div>
         <div class="goods-count info-item">
@@ -43,7 +43,16 @@ export default {
   data() {
     return {}
   },
-  components: {}
+  components: {},
+  filters:{
+    sellCounter(value){
+      let result= value      
+      if (value>10000) {
+        result= (result/10000).toFixed(1)+'万'
+      }
+      return  result;
+    }
+  }
 }
 </script>
 
@@ -88,14 +97,16 @@ export default {
 }
 .content-item {
   flex: 1;
+  position: relative;
 }
 .shop-desc {
   position: relative;
-  left: 30px;
+  left: 15%;
 }
 .info::after {
   content: '';
-  right: 10%;
+  position: absolute;
+  right: -10%;
   top: 25%;
   width: 2px;
   height: 50%;

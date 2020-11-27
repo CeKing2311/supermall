@@ -35,6 +35,16 @@ export default {
     return {};
   },
   components: {},
+  filters:{
+    sellCounter(value){
+      let _val= value.split(' ')[1]
+      let result= _val      
+      if (_val>10000) {
+        result= (result/10000).toFixed(1)+'万'
+      }
+      return  result;
+    }
+  }
 };
 </script>
 <style scoped>
@@ -65,7 +75,7 @@ export default {
 .goods-price .discount{
   font-size: 12px;
   color: white;
-  padding: 3px;
+  padding: 3px 6px;
   border-radius: 15px;
 }
 .goods-columns{

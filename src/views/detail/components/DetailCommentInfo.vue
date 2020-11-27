@@ -11,7 +11,7 @@
       </div>
       <div class="content-info">
         <div class="info">{{commentInfo.content}}</div>
-        <div class="date-info">{{GetDate(commentInfo.created)}} {{commentInfo.style}}</div>
+        <div class="date-info">{{commentInfo.created |timeFilter}} {{commentInfo.style}}</div>
         <div class="images-info">
           <img v-for="(item,index) in commentInfo.images" :src="item" :key="'comimg'+index">
         </div>
@@ -36,13 +36,13 @@ export default {
     return {}
   },
   components: {},
-  methods: {
-    GetDate(_time) {
-      const res = dateformat(_time)
+  filters: {
+    timeFilter(time) {
+      const res = dateformat(time * 1000)
       return res
-      console.log(res)
     }
-  }
+  },
+  methods: {}
 }
 </script>
 
@@ -86,10 +86,10 @@ export default {
   font-size: 12px;
   color: #aaa;
 }
-.images-info{
+.images-info {
   overflow-x: scroll;
 }
-.images-info img{
+.images-info img {
   width: 88px;
   height: 100px;
   padding-right: 8px;
