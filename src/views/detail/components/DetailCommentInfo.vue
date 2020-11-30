@@ -1,10 +1,10 @@
 <template>
-  <div class="comment-info" v-if="Object.keys(commentInfo).length!==0">
+  <div class="comment-info" >
     <div class="comment-title">
       <span>用户评价</span>
       <span class="more">更多></span>
     </div>
-    <div class="comment-content">
+    <div class="comment-content" v-if="Object.keys(commentInfo).length!==0">
       <div class="content-user">
         <img :src="commentInfo.user.avatar">
         <div class="user-name">{{commentInfo.user.uname}}</div>
@@ -21,7 +21,7 @@
 </template>
 
 <script scoped>
-import { dateformat } from 'common/utils'
+import { dateFormat } from 'common/utils'
 export default {
   name: 'DetailCommentInfo',
   props: {
@@ -38,8 +38,8 @@ export default {
   components: {},
   filters: {
     timeFilter(time) {
-      const res = dateformat(time * 1000)
-      return res
+      const date = new Date(time * 1000)
+      return dateFormat('yyyy-MM-dd', date)
     }
   },
   methods: {}
@@ -90,7 +90,7 @@ export default {
   overflow-x: scroll;
 }
 .images-info img {
-  width: 88px;
+  width: 30%;
   height: 100px;
   padding-right: 8px;
 }

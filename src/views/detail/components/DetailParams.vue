@@ -29,9 +29,7 @@ export default {
     goodsParams: {
       type: Object,
       default() {
-        return {
-          cellNum:1,
-        }
+        return {}
       }
     }
   },
@@ -39,8 +37,13 @@ export default {
     return {}
   },
   watch: {
-    goodsParams(){
-      this.cellNum= this.goodsParams.rule.tables[0][0].length-1;
+    // goodsParams() {
+    //   this.cellNum = this.goodsParams.rule.tables[0][0].length - 1
+    // }
+  },
+  computed: {
+    cellNum() {
+      return this.goodsParams.rule.tables[0][0].length - 1
     }
   },
   components: {}
@@ -52,12 +55,14 @@ export default {
   padding: 10px;
   border-bottom: 5px solid #e5e5e5;
 }
-.table-rule,.table-info {
+.table-rule,
+.table-info {
   width: 100%;
   border-collapse: separate;
   font-size: 13px;
 }
-.table-rule tr,.table-info tr{
+.table-rule tr,
+.table-info tr {
   display: flex;
   line-height: 36px;
   border-bottom: 1px solid #e5e5e5;
@@ -65,17 +70,18 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.table-rule tr td{
+.table-rule tr td {
   flex: 1;
 }
-.info-key{
+.info-key {
   flex: 1;
 }
-.info-text{
+.info-text {
   color: var(--color-high-text);
   text-align: left;
   /* padding-left: 10px; */
   position: relative;
+  word-break: keep-all;
   left: 30px;
 }
 </style>

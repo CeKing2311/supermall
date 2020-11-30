@@ -45,6 +45,7 @@ export default {
     imageLoad() {
       this.counter++
       if (this.counter === this.imageLength) {
+        // 监听图片加载完成，重新刷新页面高度
         this.$emit('imageLoad')
       }
     }

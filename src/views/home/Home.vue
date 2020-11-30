@@ -11,7 +11,7 @@
       <tab-control :titles="titles" @tabClick="tabClick" ref="tabControl"></tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
-    <back-top @click.native="backClick" v-show="isShowBackTop"></back-top>
+    <back-top @click.native="backTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
 
@@ -25,10 +25,11 @@ import NavBar from 'components/common/navbar/NavBar'
 import TabControl from 'components/content/tabControl/TabControl'
 import GoodsList from 'components/content/goods/GoodsList'
 import Scroll from 'components/common/scroll/Scroll'
-import BackTop from 'components/content/backTop/BackTop'
+// import BackTop from 'components/content/backTop/BackTop'
 // 导入方法
 import { getHomeMultidata, getHomeGoodsList } from 'network/home'
 import { debounce } from 'common/utils'
+import { imgListenerMixin, backTopMixin } from 'common/mixin'
 export default {
   name: 'Home',
   data() {
@@ -44,12 +45,13 @@ export default {
         sell: { page: 0, list: [] }
       },
       currentType: 'pop',
-      isShowBackTop: false,
+      // isShowBackTop: false,
       tabControlOffsetTop: 0,
       isTabFiexd: false,
       saveY: 0
     }
   },
+  mixins: [imgListenerMixin, backTopMixin],
   computed: {
     showGoods() {
       return this.goods[this.currentType].list
@@ -62,8 +64,8 @@ export default {
     FeatureView,
     TabControl,
     GoodsList,
-    Scroll,
-    BackTop
+    Scroll
+    // BackTop
   },
   // 进入页面时滚动到上次离开时的位置
   activated() {
@@ -71,8 +73,11 @@ export default {
     this.$refs.scroll.refresh()
   },
   // 记录页面离开时的位置
-  deactivated() {    
+  deactivated() {
+    // 保存页面位置
     this.saveY = this.$refs.scroll.getScrollY()
+    // 取消全局事件的监听
+    this.$bus.$off('imageLoad', this.ImgListener)
   },
   created() {
     this._GetHomeMultidata()
@@ -81,11 +86,12 @@ export default {
     this._GetHomeGoodsList('sell')
   },
   mounted() {
-    const refresh = debounce(this.$refs.scroll.refresh, 500)
-    //事件总线 监听图片加载完成
-    this.$bus.$on('imageLoad', () => {
-      refresh()
-    })
+    // let refresh = debounce(this.$refs.scroll.refresh, 500)
+    // //事件总线 监听图片加载完成
+    // this.homeImgListener = () => {
+    //   refresh()
+    // }
+    // this.$bus.$on('imageLoad', this.homeImgListener)
   },
   methods: {
     // 获取首页数据
@@ -125,10 +131,6 @@ export default {
       this.$refs.tabControl.currentIndex = index
       this._GetHomeGoodsList(this.currentType)
     },
-    // 回到顶部
-    backClick() {
-      this.$refs.scroll.scrollTo(0, 0, 500)
-    },
     // 监听滚动
     homeScroll(position) {
       this.isShowBackTop = -position.y > 600
@@ -154,11 +156,6 @@ export default {
 .home-nav {
   background-color: var(--color-tint);
   color: #fff;
-  /* position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  z-index: 9; */
 }
 .content {
   position: absolute;
