@@ -10,7 +10,7 @@
       <detail-comment-info :comment-info="commentInfo" ref="comment"></detail-comment-info>
       <goods-list :goods="goodsRecommend" ref="recommend"></goods-list>
     </scroll>
-    <detail-bottom-bar @addCart="addCart"></detail-bottom-bar>
+    <detail-bottom-bar @addCart="addToCart"></detail-bottom-bar>
     <back-top @click.native="backTop" class="backTop" v-show="isShowBackTop"></back-top>
   </div>
 </template>
@@ -29,7 +29,7 @@ import Scroll from 'components/common/scroll/Scroll'
 
 import { debounce } from 'common/utils'
 import { imgListenerMixin, backTopMixin } from 'common/mixin'
-
+import { mapActions } from 'vuex'
 import {
   getGoodsDetail,
   getRecommend,
@@ -84,8 +84,9 @@ export default {
   },
   updated() {},
   methods: {
+    ...mapActions(['addCart']),
     // 添加到购物车
-    addCart() {
+    addToCart() {
       // 1.获取购物车需要展示的信息
       const product = {}
       product.image = this.banners[0]
@@ -93,11 +94,16 @@ export default {
       product.desc = this.goodsInfo.desc
       product.price = this.goodsInfo.realPrice
       product.iid = this.id
-      product.checked= false
+      product.checked = true
       product.count = 1
       // 2.将商品添加到购物车
-      // this.$store.commit('addCart', product)
-      this.$store.dispatch('addCart',product)
+
+      this.addCart(product).then(res => {
+        this.$toast.show(res, 2000)
+      })
+      // this.$store.dispatch('addCart',product).then(res=>{
+      //   console.log(res);
+      // })
     },
     async _getGoodsDetail() {
       const result = await getGoodsDetail(this.id)

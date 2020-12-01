@@ -4,14 +4,14 @@
       <div slot="center">购物车({{length}})</div>
     </nav-bar>
     <cart-list></cart-list>
-   
+    <cart-bottom-bar></cart-bottom-bar>
   </div>
 </template>
 
 <script scoped>
 import NavBar from 'components/common/navbar/NavBar'
 import CartList from './components/CartList'
-
+import CartBottomBar from './components/CartBottomBar'
 import { mapGetters } from 'vuex'
 export default {
   name: 'Cart',
@@ -19,18 +19,14 @@ export default {
     return {}
   },
   computed: {
-    // ...mapGetters(['cartNum'])
     ...mapGetters({
       length:'cartNum'
     })
-    // cartNum() {
-    //   // return this.$store.state.cartList.length
-    //   return this.$store.getters.cartNum
-    // }
   },
   components: {
     NavBar,
-    CartList
+    CartList,
+    CartBottomBar
   },
   methods: {}
 }
