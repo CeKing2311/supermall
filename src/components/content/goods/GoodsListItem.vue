@@ -23,7 +23,8 @@ export default {
   },
   computed: {
     showImg() {
-      return this.goodsInfo.image || this.goodsInfo.show.img
+      // console.log(this.goodsInfo);
+      return this.goodsInfo.image || this.goodsInfo.show.img || this.goodsInfo.img
     }
   },
   data() {
@@ -37,7 +38,11 @@ export default {
       this.$bus.$emit('imageLoad')
     },
     goodsItemClick(id) {
-      this.$router.push('/detail/' + id)
+      // let routeUrl= this.$router.resolve({
+      //   path:"/detail/"+id,
+      // })
+      // window.open(routeUrl.href,'_blank');
+       this.$router.push('/detail/' + id)
     }
   }
 }

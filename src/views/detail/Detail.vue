@@ -53,6 +53,16 @@ export default {
       currentIndex: 0
     }
   },
+  beforeRouteUpdate(to, from, next) {
+    console.log(to)
+    console.log(from)
+    // this.id = to.params.id
+    window.location.href=to.path;
+    // this._getGoodsDetail()
+    // this._getRecommend()
+    // this.detailImageLoad();
+    // this.$refs.scroll.scrollTo(0,0, 500)
+  },
   mixins: [imgListenerMixin, backTopMixin],
   components: {
     DetailNavBar,
@@ -131,7 +141,6 @@ export default {
     },
     detailImageLoad() {
       this.$refs.scroll.refresh()
-
       this.themeTopY = []
       this.themeTopY.push(0)
       this.themeTopY.push(this.$refs.params.$el.offsetTop)
